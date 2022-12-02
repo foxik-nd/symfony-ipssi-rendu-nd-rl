@@ -24,15 +24,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min:2,max:255)]
+    #[Assert\Length(min:2)]
     private ?string $password = null;
+
+    #[Assert\Length(min:2)]
+    private $plainPassword = null;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Length(min:2,max:180)]
     private ?string $email = null;
 
-    #[ORM\Column]
-    private array $role = [];
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(min:2,max:255)]
@@ -90,7 +93,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -111,9 +113,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $plainPassword): self
     {
-        $this->password = $password;
+        $this->password = $plainPassword;
+
+        return $this;
+    }
+    public function getPlainPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->password = $plainPassword;
 
         return $this;
     }
@@ -237,4 +250,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 }
