@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -23,18 +24,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:2,max:255)]
     private ?string $password = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Length(min:2,max:180)]
     private ?string $email = null;
 
     #[ORM\Column]
     private array $role = [];
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:2,max:255)]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:2,max:255)]
     private ?string $firstname = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class)]
