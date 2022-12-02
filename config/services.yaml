@@ -20,8 +20,8 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\Entity\Listener\:
-        ressource: "../src/EntityListener/"
+    App\EntityListener\:
+        resource: "../src/EntityListener/"
         tags: ["doctrine.orm.entity_listener"]
 
     # add more service definitions when explicit configuration is needed
