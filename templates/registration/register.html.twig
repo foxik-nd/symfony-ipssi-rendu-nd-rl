@@ -1,12 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}IDM - Créer un compte{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="container">
+        <h1 class="h3 mb-3 font-weight-normal mt-4" >Créer un compte</h1>
+
+
+{#
+        <div class="form-group">
+            <label for="exampleInputEmail1" class="form-label mt-4">Adresse email</label>
+            <input type="email" class="form-control" id="_username" placeholder="exemple@idm.fr">
+            <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre courriel avec quiconque.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" class="form-label mt-4">Mot de passe</label>
+            <input type="password" class="form-control" id="_password" placeholder="Entrez-votre mot de passe">
+        </div>
+        #}
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.firstname, ) }}
+        {{ form_row(registrationForm.name, ) }}
+        {{ form_row(registrationForm.email, ) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
@@ -14,4 +30,5 @@
 
         <button type="submit" class="btn">Créer un compte</button>
     {{ form_end(registrationForm) }}
+
 {% endblock %}
