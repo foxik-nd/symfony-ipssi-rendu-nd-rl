@@ -23,7 +23,6 @@ class Product
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?User $seller = null;
 
     #[ORM\Column]
@@ -47,15 +46,15 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?bool $status = null;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'produits')]
-    private Collection $categories;
+    #[ORM\ManyToOne(inversedBy: 'product')]
+    private ?Category $category = null;
 
     #[ORM\OneToMany(mappedBy: 'Products', targetEntity: CartProduct::class)]
     private Collection $cartProducts;
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+        $this->cart= new ArrayCollection();
         $this->cartProducts = new ArrayCollection();
     }
 
@@ -108,6 +107,18 @@ class Product
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
@@ -184,34 +195,7 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Category $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-            $category->addProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): self
-    {
-        if ($this->categories->removeElement($category)) {
-            $category->removeProduit($this);
-        }
-
-        return $this;
-    }
-
-    /**
+   /**
      * @return Collection<int, CartProduct>
      */
     public function getCartProducts(): Collection

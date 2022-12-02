@@ -18,12 +18,12 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'categories')]
-    private Collection $produits;
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'categories')]
+    private Collection $product;
 
     public function __construct()
     {
-        $this->produits = new ArrayCollection();
+        $this->product = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -36,7 +36,7 @@ class Category
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -46,23 +46,29 @@ class Category
     /**
      * @return Collection<int, Product>
      */
-    public function getProduits(): Collection
+    public function getProduct(): Collection
     {
-        return $this->produits;
+        return $this->product;
     }
 
-    public function addProduit(Product $produit): self
+    public function addProduct(Product $product): self
     {
-        if (!$this->produits->contains($produit)) {
-            $this->produits->add($produit);
+        if (!$this->product->contains($product)) {
+            $this->product->add($product);
+            $product->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeProduit(Product $produit): self
+    public function removeProduct(Product $product): self
     {
-        $this->produits->removeElement($produit);
+        if ($this->product->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getCategory() === $this) {
+                $product->setCategory(null);
+            }
+        }
 
         return $this;
     }
