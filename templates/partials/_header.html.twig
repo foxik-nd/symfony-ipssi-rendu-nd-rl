@@ -1,21 +1,54 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">IPSSI Drug Market</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarColor03">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="{{ path('app_content') }}">Accueil
-            <span class="visually-hidden">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="{{ path('app_product_index') }}">Produits
-            <span class="visually-hidden">(current)</span>
-          </a>
-        </li>
-    </div>
-  </div>
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">IPSSI Drug Market</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		{% if is_granted("ROLE_ADMIN") %}
+			{% set mainMenu = [
+                {'path': 'app_content','name': 'Home' },
+                {'path': 'app_content', 'name': 'Produits CRUD' },
+                {'path': 'app_content',  'name': 'Articles CRUD' },
+                {'path': 'app_content',  'name': 'Categories CRUD' },
+                {'path': 'app_logout','name': 'Deconnexion'}
+            ] %}
+		{% elseif is_granted("ROLE_SELLER") %}
+			{% set mainMenu = [
+                {'path': 'app_content', 'name': 'Home' },
+                {'path': 'app_product_index',   'name': 'Produits' },
+                {'path': 'app_content', 'name': ' Mes produits' },
+                {'path': 'app_content',  'name': 'Panier' },
+                {'path': 'app_content',   'name': 'Profil' },
+                {'path': 'app_logout','name': 'Deconnexion'}
+            ] %}
+		{% elseif is_granted("ROLE_USER") %}
+			{% set mainMenu = [
+                {'path': 'app_content', 'name': 'Accueil' },
+                {'path': 'app_product_index','name': 'Produits' },
+                {'path': 'app_content','name': 'Panier' },
+                {'path': 'app_content',   'name': 'Profil' },
+                {'path': 'app_logout','name': 'Deconnexion'}
+            ] %}
+		{% else %}
+			{% set mainMenu = [
+                {'path': 'app_content', 'name': 'Home' },
+                {'path': 'app_product_index',   'name': 'Produits' },
+                {'path': 'app_login','name': 'Connexion' },
+                {'path': 'app_register',  'name': 'Inscription' }
+            ] %}
+		{% endif %}
+
+
+		<div class="collapse navbar-collapse" id="navbarColor03">
+			<ul class="navbar-nav me-auto">
+				{% for item in mainMenu %}
+					<li class="nav-item" {{ app.request.get('_route') == item['path'] ? ' class="active"' : '' }}>
+						<a class="nav-link active" href="{{ path(item['path']) }}">{{ item['name'] }}
+							<span class="visually-hidden">(current)</span>
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
 </nav>
