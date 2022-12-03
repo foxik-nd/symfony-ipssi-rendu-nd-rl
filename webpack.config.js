@@ -9,6 +9,8 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
+
+    .copyFiles({from: 'public/build/images'})
     // public path used by the web server to access the output path
     .setPublicPath('/build')
     // only needed for CDN's or subdirectory deploy
@@ -58,9 +60,6 @@ Encore
 
     // enables Sass/SCSS support
     //.enableSassLoader()
-
-    //enable Tailwind css
-    .enablePostCssLoader()
     
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
@@ -74,6 +73,13 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
+
+    //enable Tailwind css
+    .enablePostCssLoader((options) => {
+        options.postcssOptions = {
+            config:'./postcss.config.js'
+        }
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();
