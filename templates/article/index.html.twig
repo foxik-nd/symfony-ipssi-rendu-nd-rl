@@ -1,45 +1,109 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Article index{% endblock %}
+{% block title %}Article index
+{% endblock %}
 
 {% block body %}
-    <h1>Article index</h1>
+	<div class="row d-flex justify-content-center mt-100 mb-100">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Content</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>Status</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for article in articles %}
-            <tr>
-                <td>{{ article.id }}</td>
-                <td>{{ article.title }}</td>
-                <td>{{ article.description }}</td>
-                <td>{{ article.content }}</td>
-                <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ article.updatedAt ? article.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ article.status ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
-                    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_article_new') }}">Create new</a>
+		<div class="col-lg-6">
+
+			<div class="card">
+				<div class="card-body text-center">
+					<h4 class="card-title m-b-0">News Updates</h4>
+				</div>
+				<ul class="list-style-none">
+
+					{% for article in articles %}
+						<li class="d-flex no-block card-body border-top">
+							<i class="fa fa-gift w-30px m-t-5"></i>
+							<div>
+								<a href="{{ path('app_article_show', {'id': article.id}) }}" class="m-b-0 font-medium p-0" data-abc="true">{{ article.title }}</a>
+								<span class="text-muted">{{ article.description }}</span>
+							</div>
+							<div class="ml-auto">
+								<div class="tetx-right">
+									<h5 class="text-muted m-b-0">{{ article.createdAt ? article.createdAt|date('Y-m-d') : '' }}</h5>
+									<span class="text-muted font-16">MAR</span>
+								</div>
+							</div>
+						</li>
+
+					{% else %}
+						<tr>
+							<td colspan="8">no records found</td>
+						</tr>
+					{% endfor %}
+				</ul>
+			</div>
+
+		</div>
+	</div>
+
+
+	<a href="{{ path('app_article_new') }}">Create new</a>
+    <style>
+     @import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
+
+ body {
+     background-color: #D32F2F;
+     font-family: 'Calibri', sans-serif !important
+ } 
+
+.mt-100{ 
+    margin-top:100px;
+}
+.mb-100{
+    margin-bottom:100px;
+}
+.card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0px solid transparent;
+    border-radius: 0px;
+}
+
+.card-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+.card .card-title {
+    position: relative;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+ul.list-style-none li {
+    list-style: none;
+}
+
+ul.list-style-none li a {
+    color: #673AB7;
+    padding: 8px 0px;
+    display: block;
+    text-decoration: none;
+}
+
+.m-t-5 {
+    margin-top: 5px;
+}
+
+.w-30px {
+    width: 30px;
+}
+    </style>
 {% endblock %}
