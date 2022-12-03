@@ -1,0 +1,49 @@
+roles :
+acheter@acheter.com
+acheter		mdp
+acheteur
+
+vendeur@vendeur.com
+vendeur		mdp
+vendeur
+
+admin@admin.com
+adminadmin		mdp
+admin			
+
+A faire
+	page produits: 
+	transformer madeIn en tableau pour mettre plusieurs locations selectionnable
+	cartes plus grandes: 2 cote a cote
+	ajouter au cartes: description, vendeur, categorie
+	mettre le lien direct sur la card
+	ne pas afficher si stock <1 et si status==0
+	
+	page produit Vendeur:
+	rajouter nb a selectionner/ pays a selectionner
+
+	
+	page profil: 
+		 Elle doit lister les infos de l'utilisateur, nom, prénom, email, statut. Ses produits si il est vendeur. 
+		 La page doit également renvoyer vers l'edition des infos de l'utilisateur d'une part(nom, prénom, email), et l'édition de son mot de passe d'autre part. Ces formulaires et pages doivent etre indépendants. 
+	
+	pages Mes Produits pour vendeur
+		- Si il est vendeur, il doit pouvoir accéder à la création d'un produit, l'édition et suppression des siens. 
+
+	page Panier pour User et Vendeur
+
+		 Les utilisateurs doivent avoir accès à leur panier. Listant, les produits ajoutés à leur panier et la quantité associée ainsi que l'option personnalisée choisie.
+		 Le panier doit afficher un bouton "Acheter" vidant le panier et ajustant les stocks restant sur les produits venant d'être achetés. 
+
+	
+	### Une page admin accessible UNIQUEMENT par l'admin
+- L'admin doit y avoir un header différent de la base : Avec en lien, articles, produits, catégories, utilisateurs. 
+- La page d'accueil de l'admin doit renseigner un panel de stats avec le nombre existant de chacune des entités.
+- Chaque page doit avoir un formulaire de filtre permettant de trier avec les attributs respectifs de chaque entité. 
+- Produits : Vendeur, Catégories, DESC ou ASC
+- Articles : DESC ou ASC
+- Catégories : DESC ou ASC
+- Users : Statut (vendeur/client) 
+L'admin doit pouvoir naviguer de son interface au site classique. Il doit avoir un bandeau ou un rappel visuel distinctif de son statut en tout temps sur toutes les pages lorsqu'il est connecté. 
+
+	style partt
