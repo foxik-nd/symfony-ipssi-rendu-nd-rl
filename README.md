@@ -16,7 +16,7 @@
 
 ### Clone
 
-    git clone https://github.com/CDevJenny/symfony-ipssi.git
+    git clone https://github.com/foxik-nd/symfony-ipssi-rendu-nd-rl.git
 
 ### Create env file
 
