@@ -12,10 +12,11 @@
 			<table>
 				<thead>
 					<tr>
-						<th>Produit</th>
-						<th>Prix</th>
-						<th>Quantité</th>
-						<th>Total</th>
+						<th class='mx-10'>Produit   </th>
+						<th class='mx-10'>Prix     </th>
+						<th>Quantité   €</th>
+						<th>Provenances </th>
+						<th>Total   </th>
 						<th></th>
 					</tr>
 				</thead>
@@ -23,12 +24,11 @@
 					{% for item in items %}
 						<tr>
 							<td>
-								{{ item.product.title }}</td>
+								{{ item.product.title }}       </td>
 							<td>
-								{{ item.product.price }}</td>
+								{{ item.product.price }}       </td>
 							<td>
-								{{ item.quantity }}</td>
-							<td></td>
+								{{ item.quantity }}        </td>
 							<td>
 							{{ item.product.origin ? item.product.origin|join(', ') : '' }}
                                     </td>
@@ -44,8 +44,8 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="3" class="text-right">Total :</td>
-						<td>{{total}}</td>
+						<td colspan="2" class="text-right">Total :</td>
+						<td>{{total}} €</td>
 						<td></td>
 					</tr>
 

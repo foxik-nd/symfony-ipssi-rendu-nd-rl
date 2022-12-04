@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav {% if is_granted("ROLE_ADMIN") %} class="navbar navbar-expand-lg navbar-light bg-warning"{% else %} class="navbar navbar-expand-lg navbar-light bg-light" {% endif %}>
 	<div class="container-fluid">
 		<a class="navbar-brand" href="#">IPSSI Drug Market</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,18 +13,6 @@
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('app_product_index') }}">Produits</a>
 				</li>
-				{% if is_granted("ROLE_ADMIN") %}
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_content') }}">Admin</a>
-					</li>
-										<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_user_show', {'id': app.user.id}) }}">Profile</a>
-					</li>
-					
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
-					</li>
-				{% endif %}
 								{% if is_granted("ROLE_USER") %}
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('app_cart_index') }}">Mon Panier</a>
@@ -37,9 +25,16 @@
 						<a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
 					</li>
 				{% endif %}
+								{% if is_granted("ROLE_ADMIN") %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_admin_index') }}">Admin</a>
+				{% endif %}
 				 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
 					</li>
 				 {% endif %}
 			</ul>

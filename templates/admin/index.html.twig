@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Index{% endblock %}
+
+{% block body %}
+<table class="table table-hover">
+  <tbody>
+<tr class="table-dark">
+      <td><a class="nav-link" href="{{ path('app_content') }}">Revenir à l'accueil</a></td>
+      <td><a class="nav-link" href="{{ path('app_admin_products') }}">Voir les produits</a></td>
+      <td><a class="nav-link" href="{{ path('app_admin_articles') }}">Voir les articles</a></td>
+      <td><a class="nav-link" href="{{ path('app_admin_category') }}">Voir les categories</a></td>
+      <td><a class="nav-link" href="{{ path('app_admin_users') }}">Voir les utilisateurs</a></td>
+    </tr>
+      </tbody>
+</table>
+
+<h3>Nombre de produits</h3>
+{{ products|length }}
+<h3>Nombre de categories</h3>
+{{ categories|length }}
+<h3>Nombre d'articles</h3>
+{{ article|length }}
+<h3>Nombre d'utilisateurs</h3>
+{{ users|length }}
+
+
+{% endblock %}

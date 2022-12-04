@@ -44,8 +44,11 @@ L'admin doit pouvoir naviguer de son interface au site classique. Il doit avoir 
 
 
 
-
-
+admin 
+	nv utlisateur/modifier ajouter statut
+	category edit delete
+	add/edit article
+	
 
 
 
