@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -51,7 +53,9 @@ class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, [
+            'type'=> 'base',
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -61,6 +65,33 @@ class UserController extends AbstractController
         }
 
         return $this->renderForm('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/{id}/edit_password', name: 'app_user_edit_password', methods: ['GET', 'POST'])]
+    public function editPassword(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(UserType::class, $user, [
+            'type'=> 'password',
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $userRepository->save($user, true);
+
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/edit_password.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);

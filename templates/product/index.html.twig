@@ -17,14 +17,8 @@
 				<div class="row">
 
 {% for product in products %}
-<!--
-rajouter if status=1
-https://flowbite.com/docs/components/card/
-https://tailwindui.com/components/ecommerce/components/product-lists
-https://bootswatch.com/morph/
-https://www.youtube.com/watch?v=3K6oBiQK8aA
+{% if product.status and product.quantity > 0 %}
 
- -->
 						<div class="col-md-6 col-lg-4 col-xl-3">
 								<div id="product-1" class="single-product">
 										<div class="part-1" style="background: url({{ asset('build/images/'~ product.image) }}) no-repeat center;background-size: cover; transition: all 0.3s; ">
@@ -33,7 +27,9 @@ https://www.youtube.com/watch?v=3K6oBiQK8aA
 														<li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
 														<li><a href="#"><i class="fas fa-heart"></i></a></li>
 														<li><a href="#"><i class="fas fa-plus"></i></a></li> -->
-														<li><a href="{{ path('app_cart_add', {'id': product.id}) }}"><i class="fas fa-expand"></i></a></li>
+														<li><a href="{{ path('app_product_show', {'id': product.id}) }}"><i class="fas fa-expand"></i></a></li>
+                                                        <li><a href="{{ path('app_cart_add', {'id': product.id}) }}"><i class="fas fa-shopping-cart"></i></a></li>
+                                                        
 												</ul>
 										</div>
 										<div class="part-2">
@@ -41,9 +37,13 @@ https://www.youtube.com/watch?v=3K6oBiQK8aA
                                                 <h4 class="product-price">Provenance: {{ product.origin[0] }}</h4>
                                                 </br>
 												<h4 class="product-price"> {{ product.price }} €</h4>
+                                                <p>Categorie:  {{ product.category.name }}</p>
+                                                <p>{{ product.description }}</p>
+                                                <p>Vendeur: {{ product.seller.firstName }}</p>
 										</div>
 								</div>
 						</div>
+                        {% endif %}
     
         <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');

@@ -30,11 +30,8 @@
 								{{ item.quantity }}</td>
 							<td></td>
 							<td>
-								{% for location in  item.product.origin %}
-
-									{{ location }}
+							{{ item.product.origin ? item.product.origin|join(', ') : '' }}
                                     </td>
-							{% endfor %}
 							<td>
 								{{ item.product.price * item.quantity }}</td>
 							<td>

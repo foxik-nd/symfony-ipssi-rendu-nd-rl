@@ -48,6 +48,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'seller', targetEntity: Product::class)]
     private Collection $products;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $status = null;
+
 
     public function __construct()
     {
@@ -210,6 +213,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $product->setSeller(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
