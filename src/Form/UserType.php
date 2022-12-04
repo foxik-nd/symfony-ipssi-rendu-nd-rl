@@ -15,33 +15,32 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if($options['type'] === 'base'){ 
+        if ($options['type'] === 'base') {
 
-        
-        $builder
-        ->add('email', EmailType::class, [
-            "label" => "Adresse Email"
-        ])
-        ->add('name', TextType::class, [
-            "label" => "Votre nom"
-        ])
-        ->add('firstname', TextType::class, [
-            "label" => "Votre prénom"
-        ])
-        
-        ;
-        }
-        else {
 
-        $builder
-        ->add('plainPassword', RepeatedType::class, array(
-            'type'              => PasswordType::class,
-            'mapped'            => false,
-            'first_options'     => array('label' => 'New password'),
-            'second_options'    => array('label' => 'Confirm new password'),
-            'invalid_message' => 'The password fields must match.',
-        ))
-            ;
+            $builder
+                ->add('email', EmailType::class, [
+                    'attr' => ['class' => 'form-control'],
+                    "label" => "Adresse Email"
+                ])
+                ->add('name', TextType::class, [
+                    'attr' => ['class' => 'form-control'],
+                    "label" => "Votre nom"
+                ])
+                ->add('firstname', TextType::class, [
+                    'attr' => ['class' => 'form-control'],
+                    "label" => "Votre prénom"
+                ]);
+        } else {
+
+            $builder
+                ->add('plainPassword', RepeatedType::class, array(
+                    'type'              => PasswordType::class,
+                    'mapped'            => false,
+                    'first_options'     => array('label' => 'New password',                'attr' => ['class' => 'form-control'],),
+                    'second_options'    => array('label' => 'Confirm new password',                 'attr' => ['class' => 'form-control'],),
+                    'invalid_message' => 'The password fields must match.',
+                ));
         }
     }
 

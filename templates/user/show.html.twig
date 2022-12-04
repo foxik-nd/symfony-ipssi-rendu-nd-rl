@@ -26,24 +26,45 @@
 					{% if user.status %}
 						Actif
 					{% else %}
-						Désactivé</td>
-                        {% endif %}
-				</td>
+						Désactivé
+				{% endif %}
+                </td>
 			</tr>
-			<tr>
-				<th>Name</th>
-				<td>{{ user.name }}</td>
-			</tr>
-			<tr>
-				<th>Firstname</th>
-				<td>{{ user.firstname }}</td>
-			</tr>
-            
 		</tbody>
 	</table>
-
-	<a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
-    <a href="{{ path('app_user_edit_password', {'id': user.id}) }}">Modifier le mot de passe</a>
+    <table>
 
 
+	<th>Produits</th>
+	{% for item in user.products %}
+		<tr>
+			<td>
+				Nom: {{ item.title }}</td>
+			<td>
+				Prix: {{ item.price }}</td>
+			<td>
+				 Quantité {{ item.quantity }}</td>
+			<td>
+            <td>
+				 Statut {{ item.status }}</td>
+			<td>
+				<a href="{{ path('app_product_edit', {'id': item.id}) }}"><button class="btn">Modifier</button></a>
+			</td>
+			<td>
+				<form method="post" action="{{ path('app_product_delete', {'id': item.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+					<button class="btn">Supprimer</button>
+				</form>
+
+			</td>
+
+		{% endfor %}
+	</tr>
+</tr></tbody></table>
+{% if is_granted("ROLE_SELLER") %}
+<a href="{{ path('app_product_new', {'id': user.id}) }}">Nouvel Artcile</a>
+{% endif %}
+
+<a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+<a href="{{ path('app_user_edit_password', {'id': user.id}) }}">Modifier le mot de passe</a>
 {% endblock %}
