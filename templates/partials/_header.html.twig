@@ -27,7 +27,7 @@
 				{% endif %}
 								{% if is_granted("ROLE_USER") %}
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_cart') }}">Mon Panier</a>
+						<a class="nav-link" href="{{ path('app_cart_index') }}">Mon Panier</a>
 					</li>
 										<li class="nav-item">
 						<a class="nav-link" href="{{ path('app_user_show', {'id': app.user.id}) }}">Profile</a>
