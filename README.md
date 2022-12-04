@@ -1,5 +1,10 @@
 # SYMFONY IPSSI
 
+## Comptes pour Test(mail+password):
+ - Admin: admin@admin.com -> adminadmin
+ - Vendeur: vendeur@vendeur.com -> vendeur
+ - Acheteur: acheter@acheter.com -> acheter
+
 ## Requirements
 
  - PHP 8.1 or higher

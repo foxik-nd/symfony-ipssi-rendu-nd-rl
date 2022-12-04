@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category index Admin {% endblock %}
+
+{% block body %}
+
+<table class="table table-hover">
+  <tbody>
+    {% for item in categories %}
+    <tr class="table-dark">
+      <td>Id: {{ item.id }}</td>
+      <td>Name: {{ item.name }}</td>
+      <td><a href="{{ path('app_category_edit', {'id': item.id}) }}"><button class="btn">Modifier</button></a></td>
+      <td>
+        <form method="post" action="{{ path('app_category_delete', {'id': item.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+            <button class="btn">Supprimer</button>
+        </form>
+	</td>
+
+
+		{% endfor %}
+        
+
+        </tbody>
+        </table>
+
+    <a href="{{ path('app_category_new') }}"><button class="btn">Ajouter une catégorie</button></a>
+    <a href="{{ path('app_admin_index') }}"><button class="btn">Retour au Panel Admin</button></a>
+{% endblock %}
+
+   

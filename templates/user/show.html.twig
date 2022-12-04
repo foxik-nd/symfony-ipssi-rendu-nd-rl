@@ -1,42 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}User
+{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+	<h1>User</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Role</th>
-                <td>{{ user.role ? user.role|join(', ') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ user.name }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ user.firstname }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Prénom</th>
+				<td>{{ user.firstName }}</td>
+			</tr>
+			<tr>
+				<th>Nom</th>
+				<td>{{ user.name }}</td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>{{ user.email }}</td>
+			</tr>
+			<tr>
+				<th>Statut</th>
+				<td>
+					{% if user.status %}
+						Actif
+					{% else %}
+						Désactivé
+				{% endif %}
+                </td>
+			</tr>
+		</tbody>
+	</table>
+    <table>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+	<th>Produits</th>
+	{% for item in user.products %}
+		<tr>
+			<td>
+				Nom: {{ item.title }}</td>
+			<td>
+				Prix: {{ item.price }}</td>
+			<td>
+				 Quantité {{ item.quantity }}</td>
+			<td>
+            <td>
+				 Statut {{ item.status }}</td>
+			<td>
+				<a href="{{ path('app_product_edit', {'id': item.id}) }}"><button class="btn">Modifier</button></a>
+			</td>
+			<td>
+				<form method="post" action="{{ path('app_product_delete', {'id': item.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+					<button class="btn">Supprimer</button>
+				</form>
 
-    {{ include('user/_delete_form.html.twig') }}
+			</td>
+
+		{% endfor %}
+	</tr>
+</tr></tbody></table>
+<div>
+{% if is_granted("ROLE_SELLER") %}
+<a href="{{ path('app_product_new', {'id': user.id}) }}"><button class="btn">Nouveau Produit<button></a>
+{% endif %}
+
+<a href="{{ path('app_user_edit', {'id': user.id}) }}"><button class="btn">Modifier<button></a>
+<a href="{{ path('app_user_edit_password', {'id': user.id}) }}"><button class="btn">Modifier le mot de passe<button></a>
+</div>
 {% endblock %}

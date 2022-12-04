@@ -13,8 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-#[ORM\EntityListeners(['App\EntityListener\UserListener'])]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -28,8 +26,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     #[Assert\Length(min:2)]
     private ?string $password = null;
-
-    private $plainPassword;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Length(min:2,max:180)]
@@ -52,8 +48,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'seller', targetEntity: Product::class)]
     private Collection $products;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Cart $cart = null;
+    #[ORM\Column(nullable: true)]
+    private ?bool $status = null;
+
 
     public function __construct()
     {
@@ -114,23 +111,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $plainPassword): self
+    public function setPassword(string $password): self
     {
-        $this->password = $plainPassword;
+        $this->password = $password;
 
         return $this;
     }
-    public function getPlainPassword(): string
-    {
-        return $this->password;
-    }
 
-    public function setPlainPassword(string $plainPassword): self
-    {
-        $this->password = $plainPassword;
-
-        return $this;
-    }
 
     /**
      * @see UserInterface
@@ -230,26 +217,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCart(): ?Cart
+    public function isStatus(): ?bool
     {
-        return $this->cart;
+        return $this->status;
     }
 
-    public function setCart(?Cart $cart): self
+    public function setStatus(?bool $status): self
     {
-        // unset the owning side of the relation if necessary
-        if ($cart === null && $this->cart !== null) {
-            $this->cart->setUser(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($cart !== null && $cart->getUser() !== $this) {
-            $cart->setUser($this);
-        }
-
-        $this->cart = $cart;
+        $this->status = $status;
 
         return $this;
     }
+
+    
 
 }

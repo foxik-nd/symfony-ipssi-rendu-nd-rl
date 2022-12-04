@@ -1,0 +1,35 @@
+	{% extends 'base.html.twig' %}
+
+{% block title %}Admin produits{% endblock %}
+
+{% block body %}
+<table class="table table-hover">
+  <tbody>
+    {% for item in products %}
+    <tr class="table-dark">
+    <td>id: {{ item.id }}</td>
+      <td>Nom: {{ item.title }}</td>
+      <td>Prix: {{ item.price }}</td>
+      <td>Categorie: {{ item.category.name }}</td>
+      <td>Quantité {{ item.quantity }}</td>
+      <td>Vendeur: {{ item.seller.email }}</td>
+      <td>Statut: {{ item.status }}</td>
+      <td>Image: {{ item.image }}</td>
+      <td>Created At: {{ item.createdAt|date('d-m-Y') }}</td>
+      <td>Updated At: {{ item.updatedAt|date('d-m-Y') }}</td>
+      <td>Provenance: {{ item.origin ?item.origin|join(', ') : '' }}</td>
+      <td><a href="{{ path('app_product_edit', {'id': item.id}) }}"><button class="btn">Modifier</button></a></td>
+      <td>
+        <form method="post" action="{{ path('app_product_delete', {'id': item.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+            <button class="btn">Supprimer</button>
+        </form>
+	</td>
+
+		{% endfor %}
+
+        </tbody>
+        </table>
+    <a href="{{ path('app_product_new') }}"><button class="btn">Ajouter un produit</button></a>
+    <a href="{{ path('app_admin_index') }}"><button class="btn">Retour au Panel Admin</button></a>
+{% endblock %}

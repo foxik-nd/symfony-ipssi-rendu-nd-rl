@@ -46,22 +46,17 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?int $quantity = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $madeIn = null;
-
     #[ORM\Column(nullable: true)]
     private ?bool $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'product')]
     private ?Category $category = null;
 
-    #[ORM\OneToMany(mappedBy: 'Products', targetEntity: CartProduct::class)]
-    private Collection $cartProducts;
+    #[ORM\Column(type: 'json')]
+    private array $origin = [];
 
     public function __construct()
     {
-        $this->cart= new ArrayCollection();
-        $this->cartProducts = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
     }
@@ -179,18 +174,6 @@ class Product
         return $this;
     }
 
-    public function getMadeIn(): ?string
-    {
-        return $this->madeIn;
-    }
-
-    public function setMadeIn(string $madeIn): self
-    {
-        $this->madeIn = $madeIn;
-
-        return $this;
-    }
-
     public function isStatus(): ?bool
     {
         return $this->status;
@@ -203,32 +186,15 @@ class Product
         return $this;
     }
 
-   /**
-     * @return Collection<int, CartProduct>
-     */
-    public function getCartProducts(): Collection
+    public function getOrigin(): array
     {
-        return $this->cartProducts;
+        $origin = $this->origin;
+        return array_unique($origin);
     }
 
-    public function addCartProduct(CartProduct $cartProduct): self
+    public function setOrigin(?array $origin): self
     {
-        if (!$this->cartProducts->contains($cartProduct)) {
-            $this->cartProducts->add($cartProduct);
-            $cartProduct->setProducts($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCartProduct(CartProduct $cartProduct): self
-    {
-        if ($this->cartProducts->removeElement($cartProduct)) {
-            // set the owning side to null (unless already changed)
-            if ($cartProduct->getProducts() === $this) {
-                $cartProduct->setProducts(null);
-            }
-        }
+        $this->origin = $origin;
 
         return $this;
     }
