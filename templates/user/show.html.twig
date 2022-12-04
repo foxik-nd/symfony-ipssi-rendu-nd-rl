@@ -61,10 +61,12 @@
 		{% endfor %}
 	</tr>
 </tr></tbody></table>
+<div>
 {% if is_granted("ROLE_SELLER") %}
-<a href="{{ path('app_product_new', {'id': user.id}) }}">Nouvel Artcile</a>
+<a href="{{ path('app_product_new', {'id': user.id}) }}"><button class="btn">Nouveau Produit<button></a>
 {% endif %}
 
-<a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
-<a href="{{ path('app_user_edit_password', {'id': user.id}) }}">Modifier le mot de passe</a>
+<a href="{{ path('app_user_edit', {'id': user.id}) }}"><button class="btn">Modifier<button></a>
+<a href="{{ path('app_user_edit_password', {'id': user.id}) }}"><button class="btn">Modifier le mot de passe<button></a>
+</div>
 {% endblock %}

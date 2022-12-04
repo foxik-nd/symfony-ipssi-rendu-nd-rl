@@ -62,12 +62,14 @@ class ProductType extends AbstractType
                 ],
             ])
             ->add('seller', EntityType::class, [
+                'mapped' => false,
                 'attr' => ['class' => 'form-select'],
                 'class' => User::class,
                 'label' => 'Choisissez votre adresse mail',
                 'choice_label' => 'email'
             ])
             ->add('category', EntityType::class, [
+                'mapped' => false,
                 'attr' => ['class' => 'form-select'],
                 'class' => Category::class,
                 'label' => 'Choisissez votre category',

@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Category</h1>
 
-    {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('category/_form.html.twig', {'button_label': 'Mettre à Jour'}) }}
 
-    <a href="{{ path('app_category_index') }}">back to list</a>
+    <a href="{{ path('app_admin_category') }}"><button class="btn">Retour à la liste</button></a>
 
     {{ include('category/_delete_form.html.twig') }}
 {% endblock %}
