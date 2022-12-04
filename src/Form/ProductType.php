@@ -19,7 +19,7 @@ class ProductType extends AbstractType
             ->add('createdAt')
             ->add('updatedAt')
             ->add('quantity')
-            ->add('madeIn')
+            ->add('orgin')
             ->add('status')
             ->add('seller')
         ;
